@@ -1,0 +1,21 @@
+{
+  "title": "Shopping Promotions PL",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Promocje dla listy zakupów",
+        "description": "Wybierz źródłową listę i sklepy monitorowane przez Blix.",
+        "data": {
+          "source_todo": "Lista zakupów",
+          "stores": "Sklepy",
+          "update_interval": "Interwał pobierania promocji",
+          "max_leaflets": "Maksymalna liczba gazetek na sklep",
+          "match_threshold": "Próg dopasowania nazwy produktu"
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Można skonfigurować tylko jedną instancję."
+    }
+  }
+}

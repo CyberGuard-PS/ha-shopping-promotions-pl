@@ -1,0 +1,21 @@
+{
+  "title": "Promocje zakupowe PL",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Promocje dla listy zakupów",
+        "description": "Integracja tworzy lustrzaną listę Todo z opisami aktualnych promocji.",
+        "data": {
+          "source_todo": "Źródłowa lista zakupów",
+          "stores": "Monitorowane sklepy",
+          "update_interval": "Odświeżanie danych (godziny)",
+          "max_leaflets": "Maks. liczba gazetek na sklep",
+          "match_threshold": "Próg dopasowania produktu"
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Integracja jest już skonfigurowana."
+    }
+  }
+}

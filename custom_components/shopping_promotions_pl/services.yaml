@@ -1,0 +1,7 @@
+refresh:
+  name: Odśwież promocje
+  description: Wymusza ponowne pobranie danych z Blix i ponowne dopasowanie listy zakupów.
+
+clear_cache:
+  name: Wyczyść pamięć podręczną
+  description: Usuwa pamięć podręczną promocji. Następne odświeżenie pobierze dane ponownie.

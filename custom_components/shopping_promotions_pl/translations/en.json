@@ -1,0 +1,21 @@
+{
+  "title": "Shopping Promotions PL",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Shopping-list promotions",
+        "description": "Creates an enriched Todo mirror with current promotional offers.",
+        "data": {
+          "source_todo": "Source shopping list",
+          "stores": "Stores",
+          "update_interval": "Refresh interval (hours)",
+          "max_leaflets": "Maximum leaflets per store",
+          "match_threshold": "Product matching threshold"
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "The integration is already configured."
+    }
+  }
+}
