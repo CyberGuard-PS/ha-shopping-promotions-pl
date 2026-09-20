@@ -7,6 +7,7 @@ promotional offers for:
 - Lidl
 - Auchan
 - Rossmann
+- Kaufland
 
 The first data provider is **Blix.pl**, which exposes structured product data
 inside current digital leaflets. The code is provider-based, so direct store
@@ -74,7 +75,7 @@ Put this project in a Git repository. In HACS add that repository as an
 ## Configuration defaults
 
 - source list: `todo.shopping_list`
-- stores: all four supported stores
+- stores: all five supported stores
 - network refresh: every 6 hours
 - maximum current leaflet candidates: 8 per store
 - fuzzy-match threshold: 0.58
@@ -154,7 +155,8 @@ dependency on undocumented mobile APIs and makes it possible to add:
 - a direct Lidl Plus provider;
 - Auchan online-catalog provider;
 - Rossmann online-catalog provider;
-- Biedronka application/catalog provider.
+- Biedronka application/catalog provider;
+- Kaufland direct/catalog provider.
 
 Direct catalogue providers are the next step if exact local-store stock or
 non-promotional shelf prices are required.
@@ -164,3 +166,9 @@ non-promotional shelf prices are required.
 Do not set aggressive refresh intervals. The default is intentionally low
 frequency. The integration fetches only a limited number of leaflet pages and
 caches results.
+
+
+## v0.1.1
+
+- Added Kaufland to supported and default monitored stores.
+- Kaufland promotions are collected through the existing Blix provider (`/sklep/kaufland/`).

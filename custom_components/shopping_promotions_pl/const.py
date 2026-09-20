@@ -13,12 +13,13 @@ CONF_MAX_LEAFLETS = "max_leaflets"
 CONF_MATCH_THRESHOLD = "match_threshold"
 
 DEFAULT_SOURCE_TODO = "todo.shopping_list"
-DEFAULT_STORES = ["biedronka", "lidl", "auchan", "rossmann"]
+DEFAULT_STORES = ["biedronka", "lidl", "auchan", "rossmann", "kaufland"]
 STORE_NAMES = {
     "biedronka": "Biedronka",
     "lidl": "Lidl",
     "auchan": "Auchan",
     "rossmann": "Rossmann",
+    "kaufland": "Kaufland",
 }
 DEFAULT_UPDATE_INTERVAL = 6
 DEFAULT_MAX_LEAFLETS = 8
