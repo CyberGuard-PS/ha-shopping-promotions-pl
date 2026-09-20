@@ -4,6 +4,7 @@ from __future__ import annotations
 from homeassistant.const import Platform
 
 DOMAIN = "shopping_promotions_pl"
+INTEGRATION_VERSION = "0.2.0"
 PLATFORMS = [Platform.TODO, Platform.SENSOR]
 
 CONF_SOURCE_TODO = "source_todo"
@@ -31,3 +32,7 @@ SERVICE_CLEAR_CACHE = "clear_cache"
 ATTR_ITEMS = "items"
 ATTR_MATCHED_ITEMS = "matched_items"
 ATTR_TOTAL_ITEMS = "total_items"
+
+FRONTEND_CARD_URL = "/shopping_promotions_pl/shopping-promotions-card.js"
+FRONTEND_CARD_TYPE = "custom:shopping-promotions-pl-card"
+DATA_FRONTEND_REGISTERED = "_frontend_registered"

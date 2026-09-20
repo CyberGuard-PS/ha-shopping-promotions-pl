@@ -3,13 +3,19 @@ from __future__ import annotations
 
 import asyncio
 import logging
+from pathlib import Path
 
+from homeassistant.components.frontend import add_extra_js_url
+from homeassistant.components.http import StaticPathConfig
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, ServiceCall, callback
 from homeassistant.helpers.event import async_track_state_change_event
 
 from .const import (
+    DATA_FRONTEND_REGISTERED,
     DOMAIN,
+    FRONTEND_CARD_URL,
+    INTEGRATION_VERSION,
     PLATFORMS,
     SERVICE_CLEAR_CACHE,
     SERVICE_REFRESH,
@@ -17,11 +23,32 @@ from .const import (
 from .coordinator import ShoppingPromotionsCoordinator
 
 _LOGGER = logging.getLogger(__name__)
+_FRONTEND_FILE = Path(__file__).parent / "frontend" / "shopping-promotions-card.js"
+
+
+async def _async_register_frontend(hass: HomeAssistant) -> None:
+    """Serve and auto-load the bundled Lovelace card once."""
+    domain_data = hass.data.setdefault(DOMAIN, {})
+    if domain_data.get(DATA_FRONTEND_REGISTERED):
+        return
+
+    if not _FRONTEND_FILE.exists():
+        _LOGGER.warning(
+            "Shopping Promotions PL frontend card is missing: %s", _FRONTEND_FILE
+        )
+        return
+
+    await hass.http.async_register_static_paths(
+        [StaticPathConfig(FRONTEND_CARD_URL, str(_FRONTEND_FILE), False)]
+    )
+    add_extra_js_url(hass, f"{FRONTEND_CARD_URL}?v={INTEGRATION_VERSION}")
+    domain_data[DATA_FRONTEND_REGISTERED] = True
 
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
-    """Set up integration-level services."""
+    """Set up integration-level services and bundled frontend."""
     hass.data.setdefault(DOMAIN, {})
+    await _async_register_frontend(hass)
 
     async def _refresh(_: ServiceCall) -> None:
         coordinators = list(hass.data.get(DOMAIN, {}).values())
@@ -40,13 +67,22 @@ async def async_setup(hass: HomeAssistant, config: dict) -> bool:
             if isinstance(coordinator, ShoppingPromotionsCoordinator):
                 coordinator.clear_cache()
 
-    hass.services.async_register(DOMAIN, SERVICE_REFRESH, _refresh)
-    hass.services.async_register(DOMAIN, SERVICE_CLEAR_CACHE, _clear_cache)
+    if not hass.services.has_service(DOMAIN, SERVICE_REFRESH):
+        hass.services.async_register(DOMAIN, SERVICE_REFRESH, _refresh)
+    if not hass.services.has_service(DOMAIN, SERVICE_CLEAR_CACHE):
+        hass.services.async_register(DOMAIN, SERVICE_CLEAR_CACHE, _clear_cache)
     return True
+
+
+async def _async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
+    """Reload the entry after Options Flow changes."""
+    await hass.config_entries.async_reload(entry.entry_id)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up a config entry."""
+    await _async_register_frontend(hass)
+
     coordinator = ShoppingPromotionsCoordinator(hass, entry)
     await coordinator.async_config_entry_first_refresh()
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = coordinator
@@ -74,6 +110,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     entry.async_on_unload(unsub_state)
     entry.async_on_unload(unsub_shopping)
+    entry.async_on_unload(entry.add_update_listener(_async_reload_entry))
     return True
 
 

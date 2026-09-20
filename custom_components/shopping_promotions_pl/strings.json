@@ -17,5 +17,20 @@
     "abort": {
       "single_instance_allowed": "Można skonfigurować tylko jedną instancję."
     }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Ustawienia Shopping Promotions PL",
+        "description": "Możesz zmienić listę źródłową, monitorowane sklepy, częstotliwość odświeżania i czułość dopasowania. Integracja zostanie automatycznie przeładowana.",
+        "data": {
+          "source_todo": "Lista zakupów",
+          "stores": "Sklepy",
+          "update_interval": "Interwał pobierania promocji",
+          "max_leaflets": "Maksymalna liczba gazetek na sklep",
+          "match_threshold": "Próg dopasowania nazwy produktu"
+        }
+      }
+    }
   }
 }

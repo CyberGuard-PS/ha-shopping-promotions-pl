@@ -4,18 +4,33 @@
     "step": {
       "user": {
         "title": "Shopping-list promotions",
-        "description": "Creates an enriched Todo mirror with current promotional offers.",
+        "description": "Creates an enriched Todo mirror and a dedicated dashboard card with current promotions.",
         "data": {
           "source_todo": "Source shopping list",
-          "stores": "Stores",
+          "stores": "Monitored stores",
           "update_interval": "Refresh interval (hours)",
           "max_leaflets": "Maximum leaflets per store",
-          "match_threshold": "Product matching threshold"
+          "match_threshold": "Product match threshold"
         }
       }
     },
     "abort": {
       "single_instance_allowed": "The integration is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Shopping Promotions PL settings",
+        "description": "Change the source list, stores, refresh interval, leaflet limit or matching threshold. The integration reloads automatically.",
+        "data": {
+          "source_todo": "Source shopping list",
+          "stores": "Monitored stores",
+          "update_interval": "Refresh interval (hours)",
+          "max_leaflets": "Maximum leaflets per store",
+          "match_threshold": "Product match threshold"
+        }
+      }
     }
   }
 }

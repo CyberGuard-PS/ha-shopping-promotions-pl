@@ -36,13 +36,16 @@ class ShoppingPromotionsCoordinator(DataUpdateCoordinator[dict[str, Any]]):
 
     def __init__(self, hass: HomeAssistant, entry: ConfigEntry) -> None:
         self.entry = entry
-        self.source_entity_id = entry.data.get(CONF_SOURCE_TODO, DEFAULT_SOURCE_TODO)
-        self.stores = list(entry.data.get(CONF_STORES, DEFAULT_STORES))
+        settings = dict(entry.data)
+        settings.update(entry.options)
+
+        self.source_entity_id = settings.get(CONF_SOURCE_TODO, DEFAULT_SOURCE_TODO)
+        self.stores = list(settings.get(CONF_STORES, DEFAULT_STORES))
         self.match_threshold = float(
-            entry.data.get(CONF_MATCH_THRESHOLD, DEFAULT_MATCH_THRESHOLD)
+            settings.get(CONF_MATCH_THRESHOLD, DEFAULT_MATCH_THRESHOLD)
         )
-        interval = int(entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL))
-        max_leaflets = int(entry.data.get(CONF_MAX_LEAFLETS, DEFAULT_MAX_LEAFLETS))
+        interval = int(settings.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL))
+        max_leaflets = int(settings.get(CONF_MAX_LEAFLETS, DEFAULT_MAX_LEAFLETS))
 
         self.provider = BlixProvider(
             async_get_clientsession(hass),

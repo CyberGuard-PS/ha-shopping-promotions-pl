@@ -7,7 +7,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN
+from .const import DOMAIN, FRONTEND_CARD_TYPE, INTEGRATION_VERSION, STORE_NAMES
 from .coordinator import ShoppingPromotionsCoordinator
 
 
@@ -48,5 +48,8 @@ class ShoppingPromotionsSensor(
             "offers_count": data.get("offers_count", 0),
             "source_entity_id": data.get("source_entity_id"),
             "stores": data.get("stores", []),
+            "store_names": STORE_NAMES,
             "items": items,
+            "integration_version": INTEGRATION_VERSION,
+            "recommended_card": FRONTEND_CARD_TYPE,
         }
